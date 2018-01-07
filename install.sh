@@ -14,9 +14,11 @@ RESET="\033[0m"
 echo -e "$G Installing direnv..."
 
 if [[ ! -d ~/.direnv ]]; then
+  current_dir=`pwd`
   git clone https://github.com/direnv/direnv ~/.direnv
   cd .direnv
   make install
+  cd $current_dir
 fi
 
 echo -e "$G done. $RESET"
