@@ -46,22 +46,6 @@ zplug load
 
 # export variables
 export EDITOR="vi"
-# -- npm --
-export PATH="$HOME/.npm-global/bin:$PATH"
-# -- yat.sh --
-export PATH="$HOME/.yat.sh/bin:$PATH"
-# -- rbenv --
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-# -- pyenv --
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-# -- nvm --
-export NVM_DIR="/home/fedeotaran/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-# -- go --
-export PATH=$PATH:/usr/local/go/bin
 # -- divenv --
 eval "$(direnv hook zsh)"
 # -- fzf --
