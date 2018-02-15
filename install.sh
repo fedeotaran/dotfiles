@@ -10,22 +10,6 @@ B="\033[0;34m"
 Y="\033[0;33m"
 RESET="\033[0m"
 
-# Install direnv
-echo -e "$G Installing direnv..."
-
-if [[ ! -d ~/.direnv ]]; then
-  current_dir=`pwd`
-  git clone https://github.com/direnv/direnv ~/.direnv
-  cd .direnv
-  make install
-  cd $current_dir
-fi
-
-echo -e "$G done. $RESET"
-
-# Files to create symbolics links
-echo -e "$G Config dotfiles..."
-
 ln_files=("zshrc")
 bckpdir="${PWD}/backups/$(date "+%Y%m%d%H%M%S_backup")"
 [ ! -d $bckpdir ] && mkdir -p $bckpdir

@@ -21,9 +21,9 @@ zplug 'modules/completion',               from:prezto
 zplug 'modules/archive',                  from:prezto
 zplug 'modules/directory',                from:prezto
 zplug 'modules/ssh',                      from:prezto
-zplug "modules/node",                     from:prezto
+#zplug "modules/node",                     from:prezto
 zplug "modules/python",                   from:prezto
-zplug "modules/ruby",                     from:prezto
+#zplug "modules/ruby",                     from:prezto
 zplug "modules/git",                      from:prezto
 
 zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'cespi_rsa'
@@ -46,10 +46,8 @@ zplug load
 
 # export variables
 export EDITOR="vi"
-# -- divenv --
-eval "$(direnv hook zsh)"
 # -- fzf --
-export FZF_DEFAULT_OPTS='--height 40% --reverse'
-export FZF_DEFAULT_COMMAND='ag -g ""'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#export FZF_DEFAULT_OPTS='--height 40% --reverse'
+#export FZF_DEFAULT_COMMAND='ag -g ""'
+#export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
