@@ -25,6 +25,12 @@ zplug 'modules/ssh',                      from:prezto
 zplug "modules/python",                   from:prezto
 #zplug "modules/ruby",                     from:prezto
 zplug "modules/git",                      from:prezto
+zplug "junegunn/fzf", \
+    as:command, \
+    rename-to:fzf, \
+    use:"*darwin*amd64*" \
+    hook-build:"install"
+
 
 zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'cespi_rsa'
 zstyle ':prezto:module:prompt' theme 'sorin'
@@ -44,10 +50,13 @@ fi
 # Then, source packages and add commands to $PATH
 zplug load
 
-# export variables
-export EDITOR="vi"
+# -- Editor
+alias vimdiff='nvim -d'
+alias vim="nvim"
+alias vi="nvim"
+export EDITOR="nvim"
 # -- fzf --
-#export FZF_DEFAULT_OPTS='--height 40% --reverse'
-#export FZF_DEFAULT_COMMAND='ag -g ""'
-#export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_OPTS='--height 40% --reverse'
+export FZF_DEFAULT_COMMAND='ag --ignore-dir venv -g ""'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

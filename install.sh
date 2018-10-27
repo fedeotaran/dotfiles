@@ -10,16 +10,42 @@ B="\033[0;34m"
 Y="\033[0;33m"
 RESET="\033[0m"
 
-ln_files=("zshrc")
-bckpdir="${PWD}/backups/$(date "+%Y%m%d%H%M%S_backup")"
-[ ! -d $bckpdir ] && mkdir -p $bckpdir
+#if [ "$(uname -s)" = 'Darwin' ]; then
+#  echo -e "$G==> Installing dependencies for mac OS $RESET"
+#
+#  [ -z "$(which brew)" ] && 
+#    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+#
+#  brew cask install iterm2 caffeine firefox google-chrome
+#
+#  brew install \
+#    ag coreutils cscope git graphviz imagemagick tree vim neovim wget zsh jq \
+#    ruby python go direnv
+#
+#  brew tap universal-ctags/universal-ctags
+#  brew install --HEAD universal-ctags
+#
+#else
+#  echo -e "$Y There are no packages to install for linux! $RESET"
+#fi
+#
+#git config --global user.email "otaran.federico@gmail.com"
+#git config --global user.name "Fede Otaran"
+
+echo -e "$G ==> Start setup dotfiles!"
+
+ln_files=("zshrc" "ideavimrc")
+backup_dir="${PWD}/backups/$(date "+%Y%m%d%H%M%S_backup")"
+
+[ ! -d $backup_dir ] && mkdir -p $backup_dir
+
 for name in *; do
-  if [[ ${ln_files[*]} =~ $name ]]; then
+  if [[ " ${ln_files[*]} " =~ " $name " ]]; then
     target="$HOME/.$name"
 
     if [ -a $target ]; then
-      echo -e "$B [+] Backing up $target to $bckpdir/.$name"
-      cp -r $target $bckpdir
+      echo -e "$B [+] Backing up $target to $backup_dir/.$name"
+      cp -r $target "$backup_dir/$name" 2> /dev/null
       echo -e "$R [-] Removing $target"
       rm -rf $target
     fi
@@ -30,5 +56,7 @@ for name in *; do
     echo -e "$Y [~] Skipping ${name}"
   fi
 done
+
+bash install-vim.sh
 
 echo -e "$G All done. $RESET"
