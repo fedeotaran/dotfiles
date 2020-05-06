@@ -60,3 +60,7 @@ export FZF_DEFAULT_OPTS='--height 40% --reverse'
 export FZF_DEFAULT_COMMAND='ag --ignore-dir venv -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+. ~/.asdf/plugins/java/set-java-home.sh

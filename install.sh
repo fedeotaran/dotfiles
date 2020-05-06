@@ -26,7 +26,8 @@ if [ "$(uname -s)" = 'Darwin' ]; then
   brew install --HEAD universal-ctags
 
 else
-  echo -e "$Y There are no packages to install for linux! $RESET"
+  echo -e "$G==> Installing dependencies for Linux $RESET"
+  apt install -y chromium-browser git jq neovim silversearcher-ag zsh
 fi
 
 git config --global user.email "otaran.federico@gmail.com"
@@ -34,7 +35,7 @@ git config --global user.name "Fede Otaran"
 
 echo -e "$G ==> Start setup dotfiles!"
 
-ln_files=("zshrc" "ideavimrc")
+ln_files=("zshrc" "alacritty.yml")
 backup_dir="${PWD}/backups/$(date "+%Y%m%d%H%M%S_backup")"
 
 [ ! -d $backup_dir ] && mkdir -p $backup_dir
@@ -56,7 +57,5 @@ for name in *; do
     echo -e "$Y [~] Skipping ${name}"
   fi
 done
-
-bash install-vim.sh
 
 echo -e "$G All done. $RESET"
