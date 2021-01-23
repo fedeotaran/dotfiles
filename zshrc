@@ -21,18 +21,19 @@ zplug 'modules/completion',               from:prezto
 zplug 'modules/archive',                  from:prezto
 zplug 'modules/directory',                from:prezto
 zplug 'modules/ssh',                      from:prezto
-#zplug "modules/node",                     from:prezto
+zplug "modules/node",                     from:prezto
 zplug "modules/python",                   from:prezto
-#zplug "modules/ruby",                     from:prezto
+zplug "modules/ruby",                     from:prezto
 zplug "modules/git",                      from:prezto
+zplug "agkozak/zsh-z"
 zplug "junegunn/fzf", \
     as:command, \
     rename-to:fzf, \
-    use:"*darwin*amd64*" \
+    use:"*linux*amd64*" \
     hook-build:"install"
 
 
-zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'cespi_rsa'
+zstyle ':prezto:module:ssh:load' identities 'id_rsa'
 zstyle ':prezto:module:prompt' theme 'sorin'
 zstyle ':prezto:module:editor' key-bindings 'vi'
 zstyle ':prezto:*:*' color 'yes'
@@ -49,6 +50,19 @@ fi
 
 # Then, source packages and add commands to $PATH
 zplug load
+if command -v alacritty-colorscheme &> /dev/null
+then
+    function reload_nvim {
+        for SERVER in $(nvr --serverlist); do
+            nvr -cc "source ~/.config/nvim/init.vim" --servername $SERVER &
+        done
+    }
+    theme(){ alacritty-colorscheme -c ~/.alacritty.yml -a "base16-$1.yml" -V && reload_nvim}
+    light(){ alacritty-colorscheme -c ~/.alacritty.yml -a base16-github.yml -V && reload_nvim; }
+    dark(){ alacritty-colorscheme -c ~/.alacritty.yml -a base16-twilight.yml -V && reload_nvim; }
+    alias ls-theme='_lstheme(){ alacritty-colorscheme -c .alacritty.yml -l }; _lstheme'
+fi
+
 
 # -- Editor
 alias vimdiff='nvim -d'
@@ -61,6 +75,14 @@ export FZF_DEFAULT_COMMAND='ag --ignore-dir venv -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+eval "$(direnv hook zsh)"
+
 . $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
-. ~/.asdf/plugins/java/set-java-home.sh
+fpath=(${ASDF_DIR}/completions $fpath)
+fpath=(~/.zsh/completion $fpath)
+autoload -Uz compinit
+compinit
+#. ~/.asdf/plugins/java/set-java-home.sh
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+alias gtt='docker run --rm -it -v gtt-config:/root -v /home/fedeotaran:/pwd kriskbx/gitlab-time-tracker'
