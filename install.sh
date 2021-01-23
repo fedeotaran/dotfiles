@@ -35,7 +35,7 @@ git config --global user.name "Fede Otaran"
 
 echo -e "$G ==> Start setup dotfiles!"
 
-ln_files=("zshrc" "alacritty.yml")
+ln_files=("zshrc" "alacritty.yml" "tmux.conf")
 backup_dir="${PWD}/backups/$(date "+%Y%m%d%H%M%S_backup")"
 
 [ ! -d $backup_dir ] && mkdir -p $backup_dir
