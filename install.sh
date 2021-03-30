@@ -16,18 +16,13 @@ if [ "$(uname -s)" = 'Darwin' ]; then
   [ -z "$(which brew)" ] && 
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-  brew cask install iterm2 caffeine firefox google-chrome
-
   brew install \
-    ag coreutils cscope git graphviz imagemagick tree vim neovim wget zsh jq \
-    ruby python go direnv
-
-  brew tap universal-ctags/universal-ctags
-  brew install --HEAD universal-ctags
+    ag coreutils git graphviz imagemagick tree vim neovim wget zsh jq \
+    ruby python direnv
 
 else
   echo -e "$G==> Installing dependencies for Linux $RESET"
-  apt install -y chromium-browser git jq neovim silversearcher-ag zsh
+  apt install -y git jq neovim silversearcher-ag zsh
 fi
 
 git config --global user.email "otaran.federico@gmail.com"
