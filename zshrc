@@ -1,4 +1,4 @@
-# Check if zplug is installed
+# Check if zplug is installed if [[ ! -d ~/.zplug ]]; then git clone https://github.com/zplug/zplug ~/.zplug
 if [[ ! -d ~/.zplug ]]; then
     git clone https://github.com/zplug/zplug ~/.zplug
     source ~/.zplug/init.zsh && zplug update --self
@@ -26,12 +26,15 @@ zplug "modules/python",                   from:prezto
 zplug "modules/ruby",                     from:prezto
 zplug "modules/git",                      from:prezto
 zplug "agkozak/zsh-z"
-zplug "junegunn/fzf", \
-    as:command, \
-    rename-to:fzf, \
-    use:"*linux*amd64*" \
-    hook-build:"install"
+zplug "junegunn/fzf-bin",\
+    as:command,\
+    from:gh-r,\
+    rename-to:"fzf",\
 
+zplug "junegunn/fzf",\
+    as:command,\
+    use:bin/fzf-tmux,\
+    on:"junegunn/fzf-bin"
 
 zstyle ':prezto:module:ssh:load' identities 'id_rsa'
 zstyle ':prezto:module:prompt' theme 'sorin'
@@ -50,18 +53,16 @@ fi
 
 # Then, source packages and add commands to $PATH
 zplug load
-if command -v alacritty-colorscheme &> /dev/null
-then
-    function reload_nvim {
-        for SERVER in $(nvr --serverlist); do
-            nvr -cc "source ~/.config/nvim/init.vim" --servername $SERVER &
-        done
-    }
-    theme(){ alacritty-colorscheme -c ~/.alacritty.yml -a "base16-$1.yml" -V && reload_nvim}
-    light(){ alacritty-colorscheme -c ~/.alacritty.yml -a base16-github.yml -V && reload_nvim; }
-    dark(){ alacritty-colorscheme -c ~/.alacritty.yml -a base16-twilight.yml -V && reload_nvim; }
-    alias ls-theme='_lstheme(){ alacritty-colorscheme -c .alacritty.yml -l }; _lstheme'
-fi
+
+function reload_nvim {
+    for SERVER in $(nvr --serverlist); do
+        nvr -cc "source ~/.config/nvim/init.vim" --servername $SERVER &
+    done
+}
+theme(){ alacritty-colorscheme -c ~/.alacritty.yml -a "base16-$1.yml" -V && reload_nvim}
+light(){ alacritty-colorscheme -c ~/.alacritty.yml -a base16-github.yml -V && reload_nvim; }
+dark(){ alacritty-colorscheme -c ~/.alacritty.yml -a base16-twilight.yml -V && reload_nvim; }
+alias ls-theme='_lstheme(){ alacritty-colorscheme -c .alacritty.yml -l }; _lstheme'
 
 
 # -- Editor
@@ -83,6 +84,7 @@ fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit
 compinit
 #. ~/.asdf/plugins/java/set-java-home.sh
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-alias gtt='docker run --rm -it -v gtt-config:/root -v /home/fedeotaran:/pwd kriskbx/gitlab-time-tracker'
+# export PYENV_ROOT="$HOME/.pyenv"
+# export PATH="$PYENV_ROOT/bin:$PATH"
+export HISTFILE=~/.zsh_history
+# export PATH="/Applications/Postgres.app/Contents/Versions/13/bin:$PATH"
